@@ -10,7 +10,7 @@
         public function __construct($host,array $credential, $verifyCE)
         {
 
-            $this->connection=connection::getInstance(new Client(['verify'=>$verifyCE]),$host,$credential);
+            $this->connection=connection::getInstance(new Client(['verify'=>$verifyCE]),$this->normalize_url($host),$credential);
 
         }
 
@@ -35,7 +35,12 @@
             return $this->connection->session;
         }
 
+        private function normalize_url($url){
+        if(substr($url, -1) != '/')
+            return $url . '/';
 
+        return $url;
+    }
 
 
 
